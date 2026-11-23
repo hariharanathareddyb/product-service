@@ -40,6 +40,16 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v7
 
+      - name: Set up Java 17 for the container build
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Package JAR for Docker
+        run: mvn --batch-mode package -DskipTests
+
       - name: Configure AWS credentials through GitHub OIDC
         uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
