@@ -39,7 +39,8 @@ pipeline {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-jenkins-deploy']]) {
                     powershell '''
                         $ErrorActionPreference = 'Stop'
-                        $image = "$env:REGISTRY/$env:ECR_REPOSITORY:$env:IMAGE_TAG"
+                        $image = '{0}/{1}:{2}' -f $env:REGISTRY, $env:ECR_REPOSITORY, $env:IMAGE_TAG
+                        Write-Host "Deploying image: $image"
                         $taskDefinition = Get-Content 'ecs-task-definition.json' -Raw | ConvertFrom-Json
                         $taskDefinition.containerDefinitions[0].image = $image
                         $renderedPath = Join-Path $env:WORKSPACE 'ecs-task-definition-rendered.json'
