@@ -14,6 +14,7 @@ pipeline {
         ECS_SERVICE    = 'product-service'
         REGISTRY       = '200090082080.dkr.ecr.ap-southeast-2.amazonaws.com'
         IMAGE_TAG      = "${BUILD_NUMBER}"
+        DOCKER_HOST    = 'npipe:////./pipe/dockerDesktopLinuxEngine'
     }
 
     stages {
